@@ -63,11 +63,11 @@ module.exports = {
       filename: '[name].[fullhash].css',
       linkType: true
     }),
-    // new CopyWebpackPlugin({
-    //   patterns: [
-    //     { from: './src/public', to: './media'}
-    //   ]
-    // }),
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: './src/public', to: './media'}
+      ]
+    }),
     new NodePolyfillPlugin(),
     new CleanWebpackPlugin({
       dry: true,
