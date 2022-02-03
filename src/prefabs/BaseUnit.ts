@@ -33,6 +33,7 @@ class BaseUnit extends Phaser.Physics.Arcade.Sprite {
 
   destroy(fromScene?: boolean): void {
     console.log(this, 'was destroyed!');
+    super.destroy();
   }
 }
 

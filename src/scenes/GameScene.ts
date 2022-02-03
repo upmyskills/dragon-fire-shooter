@@ -1,8 +1,9 @@
-import { Enemy, Player } from '../prefabs';
+import { Player } from '../prefabs';
+import { EnemyGroup } from '../groups';
 
 class GameScene extends Phaser.Scene {
   player!: Player;
-  enemy!: Enemy;
+  enemyGroup!: EnemyGroup;
   cursor!: Phaser.Types.Input.Keyboard.CursorKeys;
   background!: Phaser.GameObjects.TileSprite;
   sceneWidth!: number;
@@ -13,21 +14,25 @@ class GameScene extends Phaser.Scene {
   }
 
   init() {
+    this.showBackground();
     this.cursor = this.input.keyboard.createCursorKeys();
     this.sceneWidth = Number(this.sys.game.config.width);
     this.sceneHeight = Number(this.sys.game.config.height);
+
+    this.enemyGroup = new EnemyGroup(this);
+    this.player = new Player({ scene: this, posX: 150, posY: 350, texture: 'dragon', frame: 'dragon1' });
   }
 
   create() {
-    this.showBackground();
-    this.player = new Player({ scene: this, posX: 150, posY: 350, texture: 'dragon', frame: 'dragon1' });
-    this.enemy = Enemy.generate(this);
+    this.enemyGroup.createEmemy();
+    this.enemyGroup.createEmemy();
+    this.enemyGroup.createEmemy();
   }
 
   update() {
     this.scrollBackground();
     this.player.move();
-    this.enemy.move();
+    this.enemyGroup.jumpEnemy();
   }
 
   showBackground() {
