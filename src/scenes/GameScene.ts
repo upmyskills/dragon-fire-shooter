@@ -23,11 +23,11 @@ class GameScene extends Phaser.Scene {
     this.player = new Player({ scene: this, posX: 150, posY: 350, texture: 'dragon', frame: 'dragon1' });
   }
 
-  create() {
-    this.enemyGroup.createEmemy();
-    this.enemyGroup.createEmemy();
-    this.enemyGroup.createEmemy();
-  }
+  // create() {
+  // this.enemyGroup.createEmemy();
+  // this.enemyGroup.createEmemy();
+  // this.enemyGroup.createEmemy();
+  // }
 
   update() {
     this.scrollBackground();

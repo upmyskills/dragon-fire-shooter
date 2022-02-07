@@ -13,7 +13,9 @@ class BaseUnit extends Phaser.Physics.Arcade.Sprite {
   initUnit() {
     this.scene.physics.add.existing(this);
     this.scene.physics.world.enable(this);
+    this.body.enable = true;
     this.scene.add.existing(this);
+    this.scene.events.on(Phaser.Scenes.Events.UPDATE, this.update, this);
   }
 
   blink(scene: Phaser.Scene) {
@@ -31,9 +33,11 @@ class BaseUnit extends Phaser.Physics.Arcade.Sprite {
     this.setVelocityX(0);
   }
 
-  destroy(fromScene?: boolean): void {
-    console.log(this, 'was destroyed!');
-    super.destroy();
+  setAlive(status: boolean) {
+    console.log(`${!status ? 'deactevated' : 'activated'}`);
+    this.body.enable = status;
+    this.setVisible(status);
+    this.setActive(status);
   }
 }
 
