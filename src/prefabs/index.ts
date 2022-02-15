@@ -1,5 +1,4 @@
-import { Player } from './Player';
-import { BaseUnit } from './BaseUnit';
-import { Enemy } from './Enemy';
-
-export { Player, BaseUnit, Enemy };
+export * from './BaseUnit';
+export * from './Enemy';
+export * from './Fire';
+export * from './Player';

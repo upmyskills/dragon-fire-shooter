@@ -1,3 +1,2 @@
-import { EnemyGroup } from './EnemyGroup';
-
-export { EnemyGroup };
+export * from './EnemyGroup';
+export * from './FiresGroup';

@@ -2,12 +2,16 @@ import { IUnitOptions } from '../interfaces';
 
 class BaseUnit extends Phaser.Physics.Arcade.Sprite {
   public baseVelocity: number;
+  public fireVariant?: number;
+  public projectileCount?: number;
+  public huste?: number;
 
   constructor(options: IUnitOptions) {
     const { scene, posX, posY, texture, frame, baseVelocity } = options;
     super(scene, posX || 0, posY || 0, texture, frame);
 
     this.baseVelocity = baseVelocity || 200;
+    this.initUnit();
   }
 
   initUnit() {
@@ -18,26 +22,32 @@ class BaseUnit extends Phaser.Physics.Arcade.Sprite {
     this.scene.events.on(Phaser.Scenes.Events.UPDATE, this.update, this);
   }
 
-  blink(scene: Phaser.Scene) {
-    scene.tweens.add({
-      targets: this,
-      duration: 200,
-      repeat: 5,
-      alpha: 0.5,
-      yoyo: true,
-      ease: 'Bounce.easeOut',
-    });
+  move() {
+    this.setVelocityX(this.baseVelocity);
   }
 
-  move() {
-    this.setVelocityX(0);
+  reset(posX: number, posY: number) {
+    this.setPosition(posX, posY);
+    this.setVelocityY(0);
+    this.setAlive(true);
   }
 
   setAlive(status: boolean) {
-    console.log(`${!status ? 'deactevated' : 'activated'}`);
     this.body.enable = status;
     this.setVisible(status);
     this.setActive(status);
+  }
+
+  isOutOfRight() {
+    return this.active && this.x > this.scene.game.config.width;
+  }
+
+  isOutOfLeft() {
+    return this.active && this.x < 0;
+  }
+
+  isOutOfTopBottom() {
+    return (this.active && this.y < 0) || (this.active && this.y < this.scene.game.config.height);
   }
 }
 

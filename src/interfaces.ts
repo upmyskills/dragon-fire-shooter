@@ -6,3 +6,9 @@ export interface IUnitOptions {
   frame?: string | number;
   baseVelocity?: number;
 }
+
+export interface IUnitFireOptions {
+  velocity: number;
+  texture: string | Phaser.Textures.Texture;
+  direction: boolean;
+}

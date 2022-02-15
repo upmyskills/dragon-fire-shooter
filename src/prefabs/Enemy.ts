@@ -2,14 +2,6 @@ import { BaseUnit } from './BaseUnit';
 import { IUnitOptions } from '../interfaces';
 
 class Enemy extends BaseUnit {
-  constructor(options: IUnitOptions) {
-    super(options);
-    this.initUnit();
-
-    this.setGravityY(150);
-    this.baseVelocity = Phaser.Math.Between(100, 500);
-  }
-
   static generate(scene: Phaser.Scene) {
     const params = Enemy.generateAttributes(scene);
 
@@ -32,24 +24,25 @@ class Enemy extends BaseUnit {
     return params;
   }
 
+  initUnit() {
+    this.baseVelocity = Phaser.Math.Between(100, 500);
+    super.initUnit();
+  }
+
   move() {
     this.setVelocityX(-this.baseVelocity);
   }
 
   reset() {
-    console.log('Reset old enemy!');
     const params = Enemy.generateAttributes(this.scene);
 
     if (params.frame) this.setFrame(params.frame);
-    this.setPosition(params.posX, params.posY);
-
-    this.setAlive(true);
+    super.reset(params.posX, params.posY);
   }
 
   update() {
     if (this.active && this.y > 600) this.setVelocityY(-600);
-    if (this.active && this.x < -150) {
-      this.setVelocityY(0);
+    if (this.isOutOfLeft()) {
       this.setAlive(false);
 
       const timer = this.scene.time.addEvent({

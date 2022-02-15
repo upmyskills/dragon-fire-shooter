@@ -14,17 +14,9 @@ class EnemyGroup extends Phaser.Physics.Arcade.Group {
   }
 
   public createEnemy() {
-    console.log('Create new enemy!');
     const enemy = Enemy.generate(this.scene);
     this.add(enemy);
     enemy.move();
-  }
-
-  public jumpEnemy() {
-    this.children.each((gameObject) => {
-      const enemy = gameObject as Phaser.Physics.Arcade.Sprite;
-      if (enemy.y > 600) enemy.setVelocityY(-500);
-    });
   }
 
   update() {

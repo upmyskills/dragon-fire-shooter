@@ -1,3 +1,4 @@
+import fireImage from '../assets/sprites/fire.png';
 import dragonAtlas from '../assets/atlas/dragon.png';
 import dragonJSON from '../assets/atlas/dragon.json';
 import enemiesAtlas from '../assets/atlas/enemy.png';
@@ -25,6 +26,7 @@ class PreloadScene extends Phaser.Scene {
   loadModelsFromAtlas() {
     this.load.atlas('dragon', dragonAtlas, dragonJSON);
     this.load.atlas('enemy', enemiesAtlas, enemiesJSON);
+    this.load.image('fireImage', fireImage);
   }
 }
 

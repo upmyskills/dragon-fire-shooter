@@ -19,8 +19,8 @@ class GameScene extends Phaser.Scene {
     this.sceneWidth = Number(this.sys.game.config.width);
     this.sceneHeight = Number(this.sys.game.config.height);
 
-    this.enemyGroup = new EnemyGroup(this);
     this.player = new Player({ scene: this, posX: 150, posY: 350, texture: 'dragon', frame: 'dragon1' });
+    this.enemyGroup = new EnemyGroup(this);
   }
 
   // create() {
@@ -32,7 +32,6 @@ class GameScene extends Phaser.Scene {
   update() {
     this.scrollBackground();
     this.player.move();
-    this.enemyGroup.jumpEnemy();
   }
 
   showBackground() {

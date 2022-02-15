@@ -1,18 +1,50 @@
-import { IUnitOptions } from '../interfaces';
 import { BaseUnit } from './BaseUnit';
+import { FireGroup } from '../groups/FiresGroup';
+import { IUnitOptions } from '../interfaces';
 
 class Player extends BaseUnit {
   private cursor: Phaser.Types.Input.Keyboard.CursorKeys;
+  private fireGroup!: FireGroup;
 
   constructor(options: IUnitOptions) {
     super(options);
-    this.initUnit();
-    this.setGravityY(300);
+    this.fireGroup = new FireGroup(this.scene);
+    this.setGravityY(250);
 
     this.cursor = this.scene.input.keyboard.createCursorKeys();
 
-    // this.initUnit();
     this.blink(options.scene);
+    this.setProjectileParams();
+    this.fireTimer();
+  }
+
+  openFire() {
+    const hasDeadFire = this.fireGroup.getFirstDead();
+
+    if (this.projectileCount! > this.fireGroup.getLength()) {
+      this.fireGroup.createFire(this);
+    }
+    if (hasDeadFire) {
+      const posX = this.x + this.width / 2;
+      const posY = this.y;
+      hasDeadFire.reset(posX, posY);
+    }
+  }
+
+  fireTimer() {
+    this.scene.time.addEvent({
+      delay: this.huste,
+      repeat: this.projectileCount,
+      loop: true,
+      callbackScope: this,
+      callback: this.openFire,
+    });
+  }
+
+  setProjectileParams() {
+    this.projectileCount = 3;
+    this.fireVariant = 1;
+    this.huste = 700;
   }
 
   blink(scene: Phaser.Scene) {
@@ -27,7 +59,7 @@ class Player extends BaseUnit {
   }
 
   move() {
-    super.move();
+    this.setVelocityX(0);
 
     if (this.cursor.left.isDown) {
       this.setVelocityX(-this.baseVelocity);
